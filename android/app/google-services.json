@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "713810227241",
+    "firebase_url": "https://handel-images.firebaseio.com",
+    "project_id": "handel-images",
+    "storage_bucket": "handel-images.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713810227241:android:3c3b2ca5bfb7f47439ac38",
+        "android_client_info": {
+          "package_name": "com.example.handelimages"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713810227241-vqtgva30at61e49b3cma1uv3u6s55a1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-g3nbTtnKqPLZolJVE-7h-PoIeL3saOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713810227241-vqtgva30at61e49b3cma1uv3u6s55a1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
