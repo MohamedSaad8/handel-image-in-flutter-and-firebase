@@ -1,8 +1,10 @@
 import 'dart:io';
-
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart' as p;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
@@ -12,7 +14,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  File _image ;
+  File _image;
+
+  String _url;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,9 +45,13 @@ class _MyAppState extends State<MyApp> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                  onPressed: () {},
-                  child: Text("Upload Image"),
+                Builder(
+                  builder: (context) => RaisedButton(
+                    onPressed: () {
+                      uploadImage(context);
+                    },
+                    child: Text("Upload Image"),
+                  ),
                 ),
                 SizedBox(
                   width: 10,
@@ -59,12 +68,33 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void geImage() async{
-
+  void geImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
-      _image = image ;
+      _image = image;
     });
+  }
 
+  void uploadImage(context) async {
+    try {
+      FirebaseStorage firebaseStorage =
+          FirebaseStorage(storageBucket: 'gs://handel-images.appspot.com');
+      StorageReference storageReference =
+          firebaseStorage.ref().child(p.basename(_image.path));
+      StorageUploadTask storageUploadTask = storageReference.putFile(_image);
+      StorageTaskSnapshot snapshot = await storageUploadTask.onComplete;
+      String url = await snapshot.ref.getDownloadURL();
+      Scaffold.of(context).showSnackBar((SnackBar(
+        content: Text("success"),
+      )));
+      print(url);
+      setState(() {
+        _url = url;
+      });
+    } catch (ex) {
+      Scaffold.of(context).showSnackBar((SnackBar(
+        content: Text(ex.message),
+      )));
+    }
   }
 }
