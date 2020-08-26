@@ -4,6 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_downloader/image_downloader.dart';
 
 void main() => runApp(MyApp());
 
@@ -57,7 +58,7 @@ class _MyAppState extends State<MyApp> {
                   width: 10,
                 ),
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: loadImage,
                   child: Text("load Image"),
                 ),
               ],
@@ -96,5 +97,15 @@ class _MyAppState extends State<MyApp> {
         content: Text(ex.message),
       )));
     }
+  }
+
+  void loadImage() async {
+   String imageID = await ImageDownloader.downloadImage(_url);
+   var path = await ImageDownloader.findPath(imageID);
+   File image = File(path);
+   setState(() {
+     _image = image ;
+   });
+
   }
 }
